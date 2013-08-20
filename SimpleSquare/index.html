@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../src/d3.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+  </body>
+  <footer>
+    <script type="text/javascript">
+      console.log(d3.version);
+
+      // Lets define the chart body and declare it as svg
+      var chart = d3.select("#chart")
+        .append("svg")
+        .attr("height", 400)
+        .attr("width", 400);
+
+      chart.selectAll("circle")
+        .data([1])
+        .enter()
+        .append("rect")
+        .attr("width", 50)
+        .attr("height", 50)
+        .attr("fill", "green")
+
+    </script>
+  </footer>
+</html>

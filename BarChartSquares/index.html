@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../src/d3.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+  </body>
+  <footer>
+    <script type="text/javascript">
+      console.log(d3.version);
+
+      var height = 400;
+      var width  = 400;
+
+      // Lets define the chart body and declare it as svg
+      var chart = d3.select("#chart")
+        .append("svg")
+        .attr("height", height)
+        .attr("width", width);
+
+      var square_size = 50;
+
+      // now we need real data
+      data = [
+        {day: 0, rabbits: 2},
+        {day: 1, rabbits: 4},
+        {day: 2, rabbits: 8},
+        {day: 3, rabbits: 12},
+        {day: 4, rabbits: 18},
+        {day: 5, rabbits: 25},
+        {day: 6, rabbits: 33}
+      ]
+
+      // in order for everything to look right, we need some scales
+
+      var day_scale    = d3.scale.linear().domain([0, data.length])
+        .range([0, width]);
+      var rabbit_scale = d3.scale.linear()
+            .domain([0, d3.max(data, function(datum) { return datum.rabbits; })])
+            .rangeRound([0, height]);
+
+      chart.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("width", square_size)
+        .attr("height", square_size)
+        .attr("fill", "green")
+        .transition()
+        .delay(function(d, i) { return i * 750; })
+        .attr("y", function(d, i){ return (i*(5 + square_size)) })
+        .transition()
+        .attr("width", function(datum) { return rabbit_scale(datum.rabbits); })
+        .transition()
+        .attr("fill", function() { return '#'+Math.floor(Math.random()*16777215).toString(16); })
+
+      // Thanks to Paul Irish for that last line: http://www.paulirish.com/2009/random-hex-color-code-snippets/
+
+    </script>
+  </footer>
+</html>
